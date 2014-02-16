@@ -32,7 +32,7 @@
 % A. Boisbunon, 08/2012
 
 
-function [X,beta] = ex_literature(exemple,options)
+function [X,beta] = genDataLiterature(exemple,options)
 
 if ~isfield(options,'rho')
     options.rho = 0.5;            % Maximum correlation between variables in design matrix X

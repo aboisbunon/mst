@@ -18,6 +18,8 @@
 % Modified in August 2012.
 % Modified in November 2012.
 
+% TODO: change random by gamrnd and others (random not supported by Octave)
+
 
  
 function [X] = randSS(N, M, options)
