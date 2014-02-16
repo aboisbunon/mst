@@ -8,7 +8,12 @@ Model Selection Toolbox for Matlab/Octave
 
 List of features:
 
-- Select models
+- Linear estimators: 
+	- Lasso, 
+	- MCP, 
+	- SCAD
+- Model selection: Stein, AIC, Cp, BIC
+- Random generation of shperically spheric distributions: Gaussian, Kotz, ...
 
 # Install
 
