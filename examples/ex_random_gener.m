@@ -1,7 +1,15 @@
 % This example shows how to generate spherically symmetric random vectors.
 
-N = 10 ; % Length of each random vector
-M = 500 ; % Number of random vectors to generate
+clear all
+close all
+
+addpath(genpath('..'))
+
+%% Parameters
+N = 2 ; % Length of each random vector
+M = 10000 ; % Number of random vectors to generate
+
+%% Data generation
 
 % Example 1 : multivariate spherical Gaussian 
 options.type = 'gauss' ; % Type of distribution
