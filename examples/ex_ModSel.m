@@ -12,15 +12,15 @@ n = 750 ; % Number of observations
 P = 250 ; % Number of variables
 
 % Construction of an orthogonal design matrix X
-nom_X = ['mat_X' num2str(P) '_n' num2str(n) '.csv'] ;
-try
-    X = csvread(nom_X) ;   % if the matrix exits, load it
-catch ME
-    [Q,R] = qr(randn(n,P));
-    X = Q(:,1:P) ;
+% nom_X = ['mat_X' num2str(P) '_n' num2str(n) '.csv'] ;
+% try
+%     X = csvread(nom_X) ;   % if the matrix exits, load it
+% catch ME
+%     [Q,R] = qr(randn(n,P));
+%     X = Q(:,1:P) ;
     X = randn(n,P);
 %     csvwrite(nom_X,X) % if we want to save the matrix
-end
+% end
 
 % Construction of parameter beta
 k = 40 ;                     % Number of non-zero coefficients
@@ -29,7 +29,11 @@ optionsBeta.distr = 'unif' ; % Distribution of paramater beta ('norm' for a Gaus
 optionsBeta.sigma = 2.5 ;      % Standard error or factor of the unit interval
 optionsBeta.beta0 = 7.5 ;      % Constant to be added if we want mean(beta) non zero
 beta = zeros(P,1) ;
-beta(randsample(P,k)) = (optionsBeta.sigma*random(char(optionsBeta.distr),0,1,k,1) + optionsBeta.beta0);
+if strcmp(optionsBeta.distr,'gauss')
+    beta(randperm(P,k)) = (optionsBeta.sigma*randn(0,1,k ,1) + optionsBeta.beta0);
+else
+    beta(randperm(P,k)) = (optionsBeta.sigma*eval([optionsBeta.distr 'rnd(0,1,' num2str(k) ',1)']) + optionsBeta.beta0);
+end
 
 % Construction of error
 options.type = 'gauss' ;   % Distribution of error ('unifSS' for a uniform  
@@ -64,7 +68,7 @@ xlabel('No of selected variables')
 ylabel('loss (logarithmic scale)')
 hold on
 title(['Number of non zero coefficient k=' num2str(k)])
-stem(indmin,valmin,'--k','fill')
+plot(indmin,valmin,'ok','MarkerFaceColor','black')
 hold off
 text(indmin,valmin+45,['k=' num2str(indmin)],'HorizontalAlignment','center')
 
@@ -91,8 +95,8 @@ plot((0:P),crit_lasso,'m')
 xlabel('No of selected variables')
 ylabel('loss (logarithmic scale)')
 title(['Number of non zero coefficient k=' num2str(k)])
-stem(indmin_mcp,valmin_mcp,'--k','fill')
-stem(indmin_lasso,valmin_lasso,'--m','fill')
+plot(indmin_mcp,valmin_mcp,'ok','MarkerFaceColor','black')
+plot(indmin_lasso,valmin_lasso,'om','MarkerFaceColor','magenta')
 hold off
 text(indmin_mcp,valmin_mcp+45,['k=' num2str(indmin_mcp)],'HorizontalAlignment','center')
 text(indmin_lasso,valmin_lasso+45,['k=' num2str(indmin_lasso)],'HorizontalAlignment','center')
@@ -120,8 +124,8 @@ plot((0:P),crit_gcv,'m')
 xlabel('No of selected variables')
 ylabel('loss (logarithmic scale)')
 title(['Number of non zero coefficient k=' num2str(k)])
-stem(indmin_d0,valmin_d0,'--k','fill')
-stem(indmin_gcv,valmin_gcv,'--m','fill')
+plot(indmin_d0,valmin_d0,'ok','MarkerFaceColor','black')
+plot(indmin_gcv,valmin_gcv,'om','MarkerFaceColor','magenta')
 hold off
 text(indmin_d0,valmin_d0+45,['k=' num2str(indmin_d0)],'HorizontalAlignment','center')
 text(indmin_gcv,valmin_gcv+45,['k=' num2str(indmin_gcv)],'HorizontalAlignment','center')

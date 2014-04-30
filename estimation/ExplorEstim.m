@@ -154,7 +154,7 @@ switch explor
     case {'firm' ,'lasso','mcp','adalasso','adaptive','garrote','enet','adanet','scad'}
         options.estim = estim ;
         if options.orthog == 1
-            [beta_chap, LS, df] = FirmShrinkage(X,y,options) ;
+            [beta_chap, LS, df] = Shrinkage(X,y,options) ;
         else
             switch explor
                 case {'lasso','LASSO'}   

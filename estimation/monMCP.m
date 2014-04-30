@@ -249,7 +249,7 @@ function [Pp] = move_elt(P, elt, pos, move_type, dim)
 nn = size(P);
 
 if nargin==3
-    if (length(elt)==1)&((elt-round(elt))==0)
+    if (length(elt)==1)&&((elt-round(elt))==0)
         move_type = 'index' ;
     else
         move_type = 'value';
@@ -269,7 +269,7 @@ switch move_type
     case 'value'
         n_elt = size(elt);
         tmp = P - repmat(elt,nn(1)-n_elt(1)+1,nn(2)-n_elt(2)+1) ;
-        indice = find(sum(tmp,3-dim)==0) ;    
+        indice = find(sum(tmp,3-dim)==0) ;  
 end
 
 switch pos
@@ -280,7 +280,7 @@ switch pos
     case 'out'
         pos = 0 ;
 end
-if (pos>nn(dim))|(indice>nn(dim))
+if ~isempty(dim) && ((pos>nn(dim))||(indice>nn(dim)))
     error('Element or position exceeds matrix dimensions')
 end
 if (dim==1)

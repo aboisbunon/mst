@@ -67,7 +67,7 @@ v = Xord'*y/lambda(1) ;     % Subderivative of ||beta||_1
 k = 1 ; % Current step
 a_enlever = 0 ;
 
-while(length(indxsup{k+1}) < p)&(lambda(k)>=0)
+while(length(indxsup{k+1}) < p)&&(lambda(k)>=0)
     
     % Search for the next variable to be added
     tmp = S*sign(v(1:nI)) ;
@@ -111,7 +111,7 @@ while(length(indxsup{k+1}) < p)&(lambda(k)>=0)
         beta_LAR(indxsup{k+1},k+1)	 = beta_LAR(indxsup{k}(setdiff(1:nI+1,i0))) + (lambda(k)-lambda(k+1))*S*sign(v(1:nI)) ;
     end
     
-    if (k>1)& isempty(i_next) % Step too long: one variable needs to be deleted
+    if (k>1)&& isempty(i_next) % Step too long: one variable needs to be deleted
         
         % Search for the next variable to be deleted        
         l0  = lambda(k) + beta_LAR(indxsup{k+1},k+1)./(1+tmp) ;

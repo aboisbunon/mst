@@ -61,43 +61,43 @@ function [X] = randSS(N, M, options)
 
     switch options.type
         case 't_fisher' % multivariate student (with Fisher radius)
-            R = sqrt(N*random('f', N, options.df, M, 1));
+            R = sqrt(N*frnd(N, options.df, M, 1));
             bool_rayon = 1 ;
         case 't_mg'    % multivariate student via gaussian mixture
-            v = 1./random('gam', options.df/2, 2/options.df, M, 1);
+            v = 1./gamrnd(options.df/2, 2/options.df, M, 1);
             X = randn(N,M).*repmat(sqrt(v'),N,1);
             bool_rayon = 0 ;
         case 'exp'  % exponential radius
             R = exprnd(options.rate, M, 1);
             bool_rayon = 1 ;
         case 'wbl'  % weibull radius
-            R = random('wbl', options.scale, options.shape, M, 1);  
+            R = wblrnd(options.scale, options.shape, M, 1);  
             bool_rayon = 1 ;
         case 'kotz' % Multivariate Kotz with gamma radius
-            R = sqrt(random('gam', options.N_kotz+N/2+1,options.r/options.s^2,M,1));
+            R = sqrt(gamrnd(options.N_kotz+N/2+1,options.r/options.s^2,M,1));
             bool_rayon = 1 ;
         case 'exp_power'% Multivariate exponential power with gamma radius
-            R = random('gam', N/(2*options.power),2*options.scale^(2*options.power),M,1).^(1/(options.power*2));
+            R = gamrnd(N/(2*options.power),2*options.scale^(2*options.power),M,1).^(1/(options.power*2));
             bool_rayon = 1 ;
         case 'ep_kotz'% Multivariate exponential power through special case of Kotz
-            R = sqrt(random('gam', N/2+2,options.power/options.scale^2,M,1));
+            R = sqrt(gamrnd(N/2+2,options.power/options.scale^2,M,1));
             bool_rayon = 1 ;
         case 'laplace' % Multivariate Laplace through Gaussian mixture
-            v = random('gam',N/2,1/options.scale^2,M,1) ;
+            v = gamrnd(N/2,1/options.scale^2,M,1) ;
             bool_rayon = 0 ;
             X = randn(N,M).*repmat(sqrt(v'),N,1);
         case 'bessel'
-            v = random('gam',options.q+N/2,1/(2*options.scale^2*options.r),M,1) ;
+            v = gamrnd(options.q+N/2,1/(2*options.scale^2*options.r),M,1) ;
             bool_rayon = 0 ;
             X = randn(N,M).*repmat(sqrt(v'),N,1);            
         case 'unifSS' % Uniform distribution on a sphere of radius R
             R = repmat(options.scale,M,1) ;
             bool_rayon = 1 ;
         case 'pearsonII'
-            R = sqrt(random('beta', N/2,options.p2,M,1)) ;
+            R = sqrt(betarnd(N/2,options.p2,M,1)) ;
             bool_rayon = 1 ;
         otherwise % Gaussian distribution with chi2 distribution
-            R = sqrt(random('chi2', N, M, 1)) ;    
+            R = sqrt(chi2rnd(N, M, 1)) ;    
             bool_rayon = 1 ;
     end
 
