@@ -114,7 +114,7 @@ while(length(indxsup{k+1}) < p)&&(lambda(k)>=0)
     if (k>1)&& isempty(i_next) % Step too long: one variable needs to be deleted
         
         % Search for the next variable to be deleted        
-        l0  = lambda(k) + beta_LAR(indxsup{k+1},k+1)./(1+tmp) ;
+        l0  = lambda(k) + beta_LAR(indxsup{k+1},k)./(1+tmp) ;
         
         if ~isempty(l0((l0<lambda(k))&(l0>=0)))
             lambda(k+1) = max(l0((l0<lambda(k))&(l0>=0))) ;
